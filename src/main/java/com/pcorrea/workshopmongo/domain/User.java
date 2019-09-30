@@ -1,10 +1,15 @@
 package com.pcorrea.workshopmongo.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
-
+//para informar que classe user corresponde a uma coleção do mongodb @Document ou @Document(collection="user")
+@Document(collection = "user")
 public class User implements Serializable { //implements Serializable => para os dados serem trafegaveis em rede
-
+    //private static final long serialVersionUID = 1L; //caso precise para serializer!! @Id é a onde é a Chave
+    @Id
     private String id;
     private String name;
     private String email;
