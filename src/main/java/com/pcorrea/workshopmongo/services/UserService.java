@@ -27,6 +27,12 @@ public class UserService {
     public User insert(User obj){
         return repo.insert(obj);
     }
+
+    public void delete(String id){
+        findById(id); // se não tiver ele ja entra na exceçao do findById()
+        repo.deleteById(id);
+    }
+
     public User fromDTO(UserDTO objDTO){ //metodo que vai buscar na classe UserService poderia ser impl no UserDTO mas já tem dependencia correspondente ao db
         return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
     }

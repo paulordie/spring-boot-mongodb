@@ -43,4 +43,11 @@ public class UserResource {
         return ResponseEntity.created(uri).build(); //volta codigo de resposta 201 e o uri é o cabeçalho contendo a localização do novo recurso
     }
 
+    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE) // para retornar do metodo UserDTO
+    public ResponseEntity <Void> delete(@PathVariable String id){ //vai receber uma resposta vazia do delete
+        service.delete(id);
+
+        return ResponseEntity.noContent().build(); // retorno o codigo 204 quando não retorna nada
+    }
+
 }
