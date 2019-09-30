@@ -34,8 +34,7 @@ public class UserResource {
 
         return ResponseEntity.ok().body(new UserDTO(obj)); //retornar na resposta da requisição UserDTO
     }
-//    @RequestMapping(method = RequestMethod.POST) // notação para post insert()
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST) // notação para post insert()     @PostMapping
     public ResponseEntity <Void> insert(@RequestBody UserDTO objDto){ //para que o endpoint aceite o obj deve-se colocar @RequestBody
         User obj = service.fromDTO(objDto); //converter o metodo DTO para User
         obj = service.insert(obj);
@@ -49,5 +48,13 @@ public class UserResource {
 
         return ResponseEntity.noContent().build(); // retorno o codigo 204 quando não retorna nada
     }
+    @RequestMapping(value ="/{id}",method = RequestMethod.PUT) // endpoint de atualização
+    @PostMapping
+    public ResponseEntity <Void> update(@RequestBody UserDTO objDto, @PathVariable String id) { //para que o endpoint aceite o obj deve-se colocar @RequestBody
+        User obj = service.fromDTO(objDto); //converter o metodo DTO para User
+        obj.setId(id);
+        service.update(obj);
+        return ResponseEntity.noContent().build();
+        }
 
-}
+    }
