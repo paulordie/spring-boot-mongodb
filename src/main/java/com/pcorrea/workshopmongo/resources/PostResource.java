@@ -3,6 +3,7 @@ package com.pcorrea.workshopmongo.resources;
 import com.pcorrea.workshopmongo.domain.Post;
 import com.pcorrea.workshopmongo.domain.User;
 import com.pcorrea.workshopmongo.dto.UserDTO;
+import com.pcorrea.workshopmongo.resources.util.URL;
 import com.pcorrea.workshopmongo.services.PostService;
 import com.pcorrea.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,16 @@ public class PostResource {
     @Autowired
     private PostService service; //controlador REST vai conversar com o serviço
 
-
-
     @RequestMapping(value ="/{id}", method = RequestMethod.GET) // para retornar do metodo UserDTO
     public ResponseEntity <Post> findById(@PathVariable String id){ //para que o id case com o id da URL usar o metodo @PathVariable
         Post obj = service.findById(id);
         return ResponseEntity.ok().body(obj); //retornar na resposta da requisição UserDTO
+    }
+
+    @RequestMapping(value ="titlesearch", method = RequestMethod.GET) // para retornar do metodo UserDTO
+    public ResponseEntity <List<Post>> findByTitle(@RequestParam(value="text", defaultValue = "") String text){ //vai retornar uma lista; @RequestParam par dizer que é um parametro de busca setado com valor text no endpoint titlesearch
+        text = URL.decodeParam(text); // para decodificar o parametro text
+        List<Post> list = service.findByTItle(text); //declarar uma lista de post recebendo uma lista de title do text
+        return ResponseEntity.ok().body(list); //retornar na resposta da requisição com o corpo de uma lista
     }
 }
