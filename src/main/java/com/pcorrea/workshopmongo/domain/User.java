@@ -1,9 +1,12 @@
 package com.pcorrea.workshopmongo.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 //para informar que classe user corresponde a uma coleção do mongodb @Document ou @Document(collection="user")
 @Document(collection = "user")
@@ -13,6 +16,10 @@ public class User implements Serializable { //implements Serializable => para os
     private String id;
     private String name;
     private String email;
+    //(lazy = true) vai garantir que a lista de posts não vai sobrecarregar e somente quando for solicitado e somente os dados basicos do usuario
+    @DBRef(lazy = true)
+    private List<Post>posts = new ArrayList<>();
+
 
     public User(){
 
@@ -48,6 +55,14 @@ public class User implements Serializable { //implements Serializable => para os
         this.email = email;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,6 +75,7 @@ public class User implements Serializable { //implements Serializable => para os
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
 
 
