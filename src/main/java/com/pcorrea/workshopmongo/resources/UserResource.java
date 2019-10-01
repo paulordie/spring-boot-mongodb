@@ -1,5 +1,6 @@
 package com.pcorrea.workshopmongo.resources;
 
+import com.pcorrea.workshopmongo.domain.Post;
 import com.pcorrea.workshopmongo.domain.User;
 import com.pcorrea.workshopmongo.dto.UserDTO;
 import com.pcorrea.workshopmongo.services.UserService;
@@ -28,12 +29,13 @@ public class UserResource {
         List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList()); //converte list para listDto
         return ResponseEntity.ok().body(listDto); //retornar na resposta da requisição
     }
+
     @RequestMapping(value ="/{id}", method = RequestMethod.GET) // para retornar do metodo UserDTO
     public ResponseEntity <UserDTO> findById(@PathVariable String id){ //para que o id case com o id da URL usar o metodo @PathVariable
         User obj = service.findById(id);
-
         return ResponseEntity.ok().body(new UserDTO(obj)); //retornar na resposta da requisição UserDTO
     }
+
     @RequestMapping(method = RequestMethod.POST) // notação para post insert()     @PostMapping
     public ResponseEntity <Void> insert(@RequestBody UserDTO objDto){ //para que o endpoint aceite o obj deve-se colocar @RequestBody
         User obj = service.fromDTO(objDto); //converter o metodo DTO para User
@@ -48,6 +50,7 @@ public class UserResource {
 
         return ResponseEntity.noContent().build(); // retorno o codigo 204 quando não retorna nada
     }
+
     @RequestMapping(value ="/{id}",method = RequestMethod.PUT) // endpoint de atualização
     @PostMapping
     public ResponseEntity <Void> update(@RequestBody UserDTO objDto, @PathVariable String id) { //para que o endpoint aceite o obj deve-se colocar @RequestBody
@@ -56,5 +59,11 @@ public class UserResource {
         service.update(obj);
         return ResponseEntity.noContent().build();
         }
+
+    @RequestMapping(value ="/{id}/posts", method = RequestMethod.GET) // para retornar do metodo UserDTO
+    public ResponseEntity <List<Post>> findPost(@PathVariable String id){ //para que o id case com o id da URL usar o metodo @PathVariable
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts()); //retornar na resposta da requisição UserDTO
+    }
 
     }
