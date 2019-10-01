@@ -2,6 +2,7 @@ package com.pcorrea.workshopmongo.services;
 
 import com.pcorrea.workshopmongo.domain.Post;
 import com.pcorrea.workshopmongo.domain.User;
+import com.pcorrea.workshopmongo.dto.CommentDTO;
 import com.pcorrea.workshopmongo.dto.UserDTO;
 import com.pcorrea.workshopmongo.repository.PostRepository;
 import com.pcorrea.workshopmongo.repository.UserRepository;
@@ -9,6 +10,7 @@ import com.pcorrea.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,5 +30,10 @@ public class PostService {
 //        return repo.findByTitleContaining(text);
 //        return repo.findByTitleContainingIgnoreCase(text);
         return repo.searchTitle(text);
+    }
+
+    public List<Post> fullSearch(String text, Date minDate, Date maxDate){
+        maxDate = new Date(maxDate.getTime() + 24 *60 * 60 * 1000); // ele faz a verificação na verdade e segundos etc.
+        return repo.fullSearch(text, minDate, maxDate);
     }
 }
