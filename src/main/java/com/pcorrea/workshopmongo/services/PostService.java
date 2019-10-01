@@ -26,6 +26,7 @@ public class PostService {
 
     public List<Post> findByTItle(String text){ //metodo para buscar title na url
 //        return repo.findByTitleContaining(text);
-        return repo.findByTitleContainingIgnoreCase(text);
+//        return repo.findByTitleContainingIgnoreCase(text);
+        return repo.searchTitle(text);
     }
 }
