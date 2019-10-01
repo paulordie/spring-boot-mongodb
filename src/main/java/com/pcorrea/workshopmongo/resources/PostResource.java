@@ -1,0 +1,31 @@
+package com.pcorrea.workshopmongo.resources;
+
+import com.pcorrea.workshopmongo.domain.Post;
+import com.pcorrea.workshopmongo.domain.User;
+import com.pcorrea.workshopmongo.dto.UserDTO;
+import com.pcorrea.workshopmongo.services.PostService;
+import com.pcorrea.workshopmongo.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController //para informar que essa classe será um recurso REST
+@RequestMapping(value="/posts") //para informar o caminho do endpoint
+public class PostResource {
+
+    @Autowired
+    private PostService service; //controlador REST vai conversar com o serviço
+
+
+
+    @RequestMapping(value ="/{id}", method = RequestMethod.GET) // para retornar do metodo UserDTO
+    public ResponseEntity <Post> findById(@PathVariable String id){ //para que o id case com o id da URL usar o metodo @PathVariable
+        Post obj = service.findById(id);
+        return ResponseEntity.ok().body(obj); //retornar na resposta da requisição UserDTO
+    }
+}
