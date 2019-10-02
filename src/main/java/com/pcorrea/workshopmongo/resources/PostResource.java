@@ -43,7 +43,7 @@ public class PostResource {
             @RequestParam(value="maxDate", defaultValue = "") String maxDate){
         text = URL.decodeParam(text); // para decodificar o parametro text
         Date min = URL.convertDate(minDate, new Date(0L));
-        Date max = URL.convertDate(minDate, new Date());
+        Date max = URL.convertDate(maxDate, new Date());
         List<Post> list = service.fullSearch(text,min, max); //
         return ResponseEntity.ok().body(list); //
     }
